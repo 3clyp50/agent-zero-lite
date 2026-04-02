@@ -238,12 +238,12 @@ import sys
 
 def install():
     """Called by framework after plugin is placed in usr/plugins/."""
-    # This installs into the Agent Zero FRAMEWORK runtime (/opt/venv-a0)
+    # This installs into the Agent Zero FRAMEWORK runtime (/opt/venv)
     subprocess.run([sys.executable, "-m", "pip", "install", "some-package==1.0.0"], check=True)
 
 def pre_update():
     """Called by framework immediately before plugin update pulls new code into place."""
-    # This installs into the Agent Zero FRAMEWORK runtime (/opt/venv-a0)
+    # This installs into the Agent Zero FRAMEWORK runtime (/opt/venv)
     subprocess.run([sys.executable, "-m", "pip", "install", "some-package==1.0.0"], check=True)
 
 async def async_hook():
@@ -251,7 +251,7 @@ async def async_hook():
     pass
 ```
 
-**To install into the AGENT execution runtime** (separate from framework):
+**To install into another runtime or environment**:
 ```python
 import subprocess
 
@@ -261,7 +261,7 @@ def install():
     subprocess.run([agent_python, "-m", "pip", "install", "some-package"], check=True)
 ```
 
-Never use `sys.executable` when you need the agent runtime - it targets the framework runtime.
+Use `sys.executable` for the shared runtime. Target a different interpreter only when you intentionally need another environment.
 
 ---
 

@@ -6,8 +6,6 @@ import io
 import warnings
 from typing import Any
 
-import soundfile as sf
-
 from helpers import plugins
 from helpers.notification import (
     NotificationManager,
@@ -27,6 +25,11 @@ DEFAULT_CONFIG = {
     "voice": "am_puck,am_onyx",
     "speed": 1.1,
 }
+MISSING_DEPENDENCY_MESSAGE = (
+    "Kokoro TTS requires the voice extra. Install "
+    "`pip install -r requirements.voice.txt` and keep the `_kokoro_tts` plugin "
+    "disabled until the extra is available."
+)
 
 _pipeline = None
 is_updating_model = False
@@ -63,6 +66,31 @@ def is_globally_enabled() -> bool:
     )
 
 
+def _load_soundfile():
+    try:
+        import soundfile as soundfile_module
+    except ImportError as exc:
+        raise RuntimeError(MISSING_DEPENDENCY_MESSAGE) from exc
+    return soundfile_module
+
+
+def _load_kpipeline():
+    try:
+        from kokoro import KPipeline
+    except ImportError as exc:
+        raise RuntimeError(MISSING_DEPENDENCY_MESSAGE) from exc
+    return KPipeline
+
+
+def are_dependencies_available() -> bool:
+    try:
+        _load_soundfile()
+        _load_kpipeline()
+    except RuntimeError:
+        return False
+    return True
+
+
 async def preload(config: dict[str, Any] | None = None):
     return await _preload()
 
@@ -84,9 +112,8 @@ async def _preload():
                 group="kokoro-preload",
             )
             PrintStyle.standard("Loading Kokoro TTS model...")
-            from kokoro import KPipeline
-
-            _pipeline = KPipeline(lang_code="a", repo_id="hexgrad/Kokoro-82M")
+            kpipeline_cls = _load_kpipeline()
+            _pipeline = kpipeline_cls(lang_code="a", repo_id="hexgrad/Kokoro-82M")
             NotificationManager.send_notification(
                 NotificationType.INFO,
                 NotificationPriority.NORMAL,
@@ -139,7 +166,8 @@ async def _synthesize_sentences(
             return ""
 
         buffer = io.BytesIO()
-        sf.write(buffer, combined_audio, 24000, format="WAV")
+        soundfile_module = _load_soundfile()
+        soundfile_module.write(buffer, combined_audio, 24000, format="WAV")
         return base64.b64encode(buffer.getvalue()).decode("utf-8")
     except Exception as e:
         PrintStyle.error(f"Error in Kokoro TTS synthesis: {e}")

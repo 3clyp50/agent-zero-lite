@@ -15,15 +15,11 @@ useradd --shell /bin/bash --system \
     --comment 'Privacy-respecting metasearch engine' \
     searxng
 
-# Add the searxng user to the sudo group
-usermod -aG sudo searxng
-
 # Create the searxng directory and set ownership
 mkdir "/usr/local/searxng"
 chown -R "searxng:searxng" "/usr/local/searxng"
 
 echo "====================SEARXNG1 END===================="
 
-# Start a new shell as the searxng user and run the installation script
-su - searxng -c "bash /ins/install_searxng2.sh"
-
+# Install SearXNG into the shared runtime environment
+bash /ins/install_searxng2.sh

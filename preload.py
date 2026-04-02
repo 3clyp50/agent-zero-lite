@@ -2,14 +2,25 @@ import asyncio
 from helpers import runtime
 from helpers.print_style import PrintStyle
 import models
-from plugins._kokoro_tts.helpers import runtime as kokoro_tts_runtime
-from plugins._whisper_stt.helpers import runtime as whisper_stt_runtime
+
+
+def _get_whisper_runtime():
+    from plugins._whisper_stt.helpers import runtime as whisper_stt_runtime
+
+    return whisper_stt_runtime
+
+
+def _get_kokoro_runtime():
+    from plugins._kokoro_tts.helpers import runtime as kokoro_tts_runtime
+
+    return kokoro_tts_runtime
 
 
 async def preload():
     try:
         # preload whisper model
         async def preload_whisper():
+            whisper_stt_runtime = _get_whisper_runtime()
             if not whisper_stt_runtime.is_globally_enabled():
                 return None
             try:
@@ -34,6 +45,7 @@ async def preload():
 
         # preload kokoro tts model if enabled
         async def preload_kokoro():
+            kokoro_tts_runtime = _get_kokoro_runtime()
             if not kokoro_tts_runtime.is_globally_enabled():
                 return None
             try:

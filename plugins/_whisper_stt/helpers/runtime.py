@@ -7,8 +7,6 @@ import tempfile
 import warnings
 from typing import Any
 
-import whisper
-
 from helpers import files, plugins
 from helpers.notification import (
     NotificationManager,
@@ -31,6 +29,11 @@ DEFAULT_CONFIG = {
     "waiting_timeout": 2000,
 }
 VALID_MODEL_SIZES = {"tiny", "base", "small", "medium", "large", "turbo"}
+MISSING_DEPENDENCY_MESSAGE = (
+    "Whisper STT requires the voice extra. Install "
+    "`pip install -r requirements.voice.txt` and keep the `_whisper_stt` plugin "
+    "disabled until the extra is available."
+)
 
 _model = None
 _model_name = ""
@@ -93,6 +96,22 @@ def is_globally_enabled() -> bool:
     )
 
 
+def _load_whisper_module():
+    try:
+        import whisper
+    except ImportError as exc:
+        raise RuntimeError(MISSING_DEPENDENCY_MESSAGE) from exc
+    return whisper
+
+
+def are_dependencies_available() -> bool:
+    try:
+        _load_whisper_module()
+    except RuntimeError:
+        return False
+    return True
+
+
 async def preload(model_name: str | None = None):
     cfg = get_config()
     resolved_model = str(model_name or cfg["model_size"])
@@ -116,7 +135,8 @@ async def _preload(model_name: str):
                 group="whisper-preload",
             )
             PrintStyle.standard(f"Loading Whisper model: {model_name}")
-            _model = whisper.load_model(
+            whisper_module = _load_whisper_module()
+            _model = whisper_module.load_model(
                 name=model_name,
                 download_root=files.get_abs_path("/tmp/models/whisper"),
             )

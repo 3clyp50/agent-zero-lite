@@ -6,7 +6,7 @@ Built-in speech-to-text plugin backed by Whisper.
 
 - Registers Whisper as the active STT provider when the plugin is enabled.
 - Owns the microphone runtime, device selector UI, plugin prompt injection, and plugin APIs.
-- Keeps dependency installation and model bootstrap on the Docker/bootstrap path.
+- Expects the optional voice extra to be installed before the plugin is enabled.
 
 ## Config
 
@@ -20,3 +20,7 @@ Built-in speech-to-text plugin backed by Whisper.
 
 - `POST /api/plugins/_whisper_stt/transcribe`
 - `POST /api/plugins/_whisper_stt/status`
+
+## Optional Dependency
+
+Install `pip install -r requirements.voice.txt` before enabling `_whisper_stt`.

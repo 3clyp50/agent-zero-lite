@@ -24,7 +24,7 @@ env:
   MIN_RELEASE_MINOR: "0"
   DOCKERFILE_DIR: "docker/run"
   DOCKERFILE_PATH: "docker/run/Dockerfile"
-  DOCKER_IMAGE_NAME: "agent-zero"
+  DOCKER_IMAGE_NAME: "agent-zero-lite"
   DOCKER_PLATFORMS: "linux/amd64,linux/arm64"
 
 permissions:
@@ -32,7 +32,7 @@ permissions:
 
 jobs:
   plan:
-    if: github.repository == 'agent0ai/agent-zero'
+    if: github.repository == 'agent0ai/agent-zero-lite'
     runs-on: ubuntu-latest
     outputs:
       has_work: ${{ steps.plan.outputs.has_work }}

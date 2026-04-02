@@ -25,8 +25,8 @@ utility_model:
   kwargs: {}
 
 embedding_model:
-  provider: "huggingface"
-  name: "sentence-transformers/all-MiniLM-L6-v2"
+  provider: "openrouter"
+  name: "openai/text-embedding-3-small"
   api_base: ""
   rl_requests: 0
   rl_input: 0

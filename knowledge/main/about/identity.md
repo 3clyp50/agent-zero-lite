@@ -4,7 +4,7 @@
 
 Agent Zero is an open-source, general-purpose agentic framework. It is not pre-programmed for specific tasks and has no fixed capability set beyond the basics. Its defining characteristic is that it grows and adapts as it is used - accumulating knowledge, solutions, and behaviors through persistent memory and user customization.
 
-The framework has been created by Jan Tomášek and is maintained by the Agent Zero dev team and the community. Source code lives at github.com/agent0ai/agent-zero.
+The framework has been created by Jan Tomášek and is maintained by the Agent Zero dev team and the community. Source code lives at github.com/agent0ai/agent-zero-lite.
 
 ## Core Design Principles
 
@@ -20,11 +20,11 @@ The framework has been created by Jan Tomášek and is maintained by the Agent Z
 
 ## Project Context
 
-- **Repository**: github.com/agent0ai/agent-zero
+- **Repository**: github.com/agent0ai/agent-zero-lite
 - **License**: Open source
 - **Primary author**: Jan Tomášek
 - **Community**: Discord (discord.gg/B8KZKNsPpj), Skool community, YouTube channel
-- **Documentation**: docs/ folder in the repository; deepwiki.com/agent0ai/agent-zero for AI-generated docs
+- **Documentation**: docs/ folder in the repository; deepwiki.com/agent0ai/agent-zero-lite for AI-generated docs
 - **Current version**: v0.9.8
 
 ## Relationship With the User

@@ -27,8 +27,13 @@ def test_builtin_speech_plugins_are_discoverable_and_toggleable() -> None:
 
     assert discovered["_kokoro_tts"].always_enabled is False
     assert discovered["_whisper_stt"].always_enabled is False
+    assert discovered["_kokoro_tts"].toggle_state == "disabled"
+    assert discovered["_whisper_stt"].toggle_state == "disabled"
     assert "agent" in discovered["_kokoro_tts"].settings_sections
     assert "agent" in discovered["_whisper_stt"].settings_sections
+
+    assert (PROJECT_ROOT / "plugins/_kokoro_tts/.toggle-0").exists()
+    assert (PROJECT_ROOT / "plugins/_whisper_stt/.toggle-0").exists()
 
 
 def test_legacy_core_speech_artifacts_are_removed() -> None:

@@ -6,7 +6,7 @@
 
 ## Quick Start (Recommended)
 
-The install script is the fastest way to get Agent Zero running. It handles Docker, image pulling, and container setup automatically.
+The install script is the fastest way to get Agent Zero Lite running. It handles Docker, image pulling, and container setup automatically.
 
 **macOS / Linux:**
 ```bash
@@ -20,14 +20,14 @@ irm https://ps.agent-zero.ai | iex
 
 **Docker (run directly):**
 ```bash
-docker run -p 80:80 agent0ai/agent-zero
+docker run -p 80:80 agent0ai/agent-zero-lite
 ```
 
-Once the install completes, open the URL shown in your terminal to access the Web UI. Follow the prompts in the CLI to set your port and authentication, complete onboarding, add your API key, then continue to [Step 3: Configure Agent Zero](#step-3-configure-agent-zero).
+Once the install completes, open the URL shown in your terminal to access the Web UI. Follow the prompts in the CLI to set your port and authentication, complete onboarding, add your API key, then continue to [Step 3: Configure Agent Zero Lite](#step-3-configure-agent-zero-lite).
 
 ---
 
-## How to Update Agent Zero
+## How to Update Agent Zero Lite
 
 ### Self Update (Recommended)
 
@@ -57,8 +57,8 @@ If you are upgrading from an older version of Agent Zero (v0.9.8 or earlier) to 
 > Use this only if Self Update is unavailable or you must manage containers yourself (for example, some custom Docker setups).
 
 1. Keep the current container running
-2. `docker pull agent0ai/agent-zero:latest`
-3. Start a **new** container on a different host port, for example: `docker run -d -p 50081:80 --name agent-zero-new agent0ai/agent-zero`
+2. `docker pull agent0ai/agent-zero-lite:latest`
+3. Start a **new** container on a different host port, for example: `docker run -d -p 50081:80 --name agent-zero-new agent0ai/agent-zero-lite`
 4. On the **old** instance: **Settings → Backup & Restore → Create Backup**
 5. On the **new** instance: **Restore** the backup
 6. Verify chats and data, then remove the old container
@@ -79,7 +79,7 @@ Follow the steps below to install Docker and run the image by hand.
 
 ### Step 1: Install Docker Desktop
 
-Docker Desktop provides the runtime environment for Agent Zero, ensuring consistent behavior and security across platforms. The entire framework runs within a Docker container, providing isolation and easy deployment.
+Docker Desktop provides the runtime environment for Agent Zero Lite, ensuring consistent behavior and security across platforms. The entire framework runs within a Docker container, providing isolation and easy deployment.
 
 **Choose your operating system:**
 
@@ -134,7 +134,7 @@ Once installed, launch Docker Desktop from your Start menu or desktop shortcut.
 
 ✅ **Docker is now installed!** 
 
-Continue to [Step 2: Run Agent Zero](#step-2-run-agent-zero)
+Continue to [Step 2: Run Agent Zero Lite](#step-2-run-agent-zero-lite)
 
 ---
 
@@ -171,7 +171,7 @@ Open Docker Desktop from your Applications folder.
 
 ✅ **Docker is now installed!** 
 
-Continue to [Step 2: Run Agent Zero](#step-2-run-agent-zero)
+Continue to [Step 2: Run Agent Zero Lite](#step-2-run-agent-zero-lite)
 
 ---
 
@@ -215,13 +215,13 @@ If you installed Docker Desktop, launch it from your applications menu.
 
 ---
 
-### Step 2: Run Agent Zero
+### Step 2: Run Agent Zero Lite
 
-#### 2.1. Pull the Agent Zero Docker Image
+#### 2.1. Pull the Agent Zero Lite Docker Image
 
 **Using Docker Desktop GUI:**
 
-- Search for `agent0ai/agent-zero` in Docker Desktop
+- Search for `agent0ai/agent-zero-lite` in Docker Desktop
 - Click the `Pull` button
 - The image will be downloaded to your machine in a few minutes
 
@@ -230,12 +230,12 @@ If you installed Docker Desktop, launch it from your applications menu.
 **Using Terminal:**
 
 ```bash
-docker pull agent0ai/agent-zero
+docker pull agent0ai/agent-zero-lite
 ```
 
 #### 2.2. (Optional) Map Folders for Persistence
 
-Choose or create a folder on your computer where Agent Zero will save its data. 
+Choose or create a folder on your computer where Agent Zero Lite will save its data. 
 
 Setting up persistence is needed only if you want your data and files to remain available even after you delete the container.
 
@@ -250,14 +250,14 @@ You can map just the `/a0/usr` directory (recommended) or individual subfolders 
 > Do **not** map the entire `/a0` directory: it contains the application code and can break upgrades.
 
 > [!TIP]
-> Choose a location that's easy to access and backup. All your Agent Zero data will be directly accessible in this directory.
+> Choose a location that's easy to access and backup. All your Agent Zero Lite data will be directly accessible in this directory.
 
 #### 2.3. Run the Container
 
 **Using Docker Desktop GUI:**
 
 - In Docker Desktop, go to the "Images" tab
-- Click the `Run` button next to the `agent0ai/agent-zero` image
+- Click the `Run` button next to the `agent0ai/agent-zero-lite` image
 - Open the "Optional settings" menu
 - **Ensure at least one host port is mapped to container port `80`** (set host port to `0` for automatic assignment)
 - Click the `Run` button
@@ -275,7 +275,7 @@ The framework will take a few seconds to initialize. Find the mapped port in Doc
 
 ![docker logs](../res/setup/5-docker-click-to-open.png)
 
-Open `http://localhost:<PORT>` in your browser. The Web UI will open - Agent Zero is ready for configuration!
+Open `http://localhost:<PORT>` in your browser. The Web UI will open - Agent Zero Lite is ready for configuration.
 
 ![docker ui](../res/setup/6-docker-a0-running-new.png)
 
@@ -288,14 +288,14 @@ Open `http://localhost:<PORT>` in your browser. The Web UI will open - Agent Zer
 **Running A0 using Terminal?**
 
 ```bash
-docker run -p 0:80 -v /path/to/your/work_dir:/a0/usr agent0ai/agent-zero
+docker run -p 0:80 -v /path/to/your/work_dir:/a0/usr agent0ai/agent-zero-lite
 ```
 
 - Replace `0` with a fixed port if you prefer (e.g., `50080:80`)
 
 ---
 
-## Step 3: Configure Agent Zero
+## Step 3: Configure Agent Zero Lite
 
 The UI will show a warning banner "Missing LLM API Key for current settings". Click on `Add your API key` to enter Settings and start configuring A0.
 
@@ -350,12 +350,12 @@ Use `claude-sonnet-4-5` for Anthropic, but use `anthropic/claude-sonnet-4-5` for
 - **Model Name:** Select the specific embedding model (e.g., text-embedding-3-small)
 
 > [!NOTE]
-> Agent Zero uses a local embedding model by default (runs on CPU), but you can switch to OpenAI embeddings like `text-embedding-3-small` or `text-embedding-3-large` if preferred.
+> Agent Zero Lite defaults to OpenRouter embeddings with `openai/text-embedding-3-small`. Local HuggingFace embeddings remain available after installing `requirements.local-embeddings.txt`.
 
 ### Built-in Voice Plugins
 
-- Agent Zero ships Whisper STT as the built-in `_whisper_stt` plugin and Kokoro TTS as the built-in `_kokoro_tts` plugin.
-- Docker/bootstrap remains responsible for installing the required speech dependencies such as `ffmpeg`, Kokoro, Whisper, and `soundfile`.
+- Agent Zero Lite ships Whisper STT as the built-in `_whisper_stt` plugin and Kokoro TTS as the built-in `_kokoro_tts` plugin.
+- Both plugins are disabled by default in lite and require `pip install -r requirements.voice.txt` before enabling them.
 - Both plugins can be enabled or disabled independently from the Agent Plugins section in the Web UI.
 - Whisper model size, language, and silence behavior are configured from the plugin settings screen.
 - If `_kokoro_tts` is disabled, spoken output falls back to the browser's native speech synthesis instead of the container runtime.
@@ -402,9 +402,9 @@ The Settings page is the control center for selecting the Large Language Models 
 
 | LLM Role | Description |
 | --- | --- |
-| `chat_llm` | This is the primary LLM used for conversations, agent reasoning, tool use, and the built-in browser agent. Vision support controls browser vision and image understanding. |
+| `chat_llm` | This is the primary LLM used for conversations, agent reasoning, and tool use. |
 | `utility_llm` | This LLM handles internal tasks like summarizing messages, managing memory, and processing internal prompts. Using a smaller, less expensive model here can improve efficiency. |
-| `embedding_llm` | The embedding model shipped with A0 runs on CPU and is responsible for generating embeddings used for memory retrieval and knowledge base lookups. Changing the `embedding_llm` will re-index all of A0's memory. |
+| `embedding_llm` | The embedding model is responsible for generating embeddings used for memory retrieval and knowledge base lookups. Changing the `embedding_llm` will re-index all of A0's memory. |
 
 **How to Change:**
 
@@ -413,7 +413,7 @@ The Settings page is the control center for selecting the Large Language Models 
 3. Click "Save" to apply the changes.
 
 > [!NOTE]
-> The Browser Agent does not have a separate model slot. It uses the effective Main Model resolved by `_model_config`, including per-chat overrides and the Main Model vision flag.
+> Agent Zero Lite removes the built-in browser agent. Use MCP-based browser tooling if you need browser automation.
 
 ### Important Considerations
 
@@ -510,7 +510,7 @@ ollama pull <model-name>
 
 Replace `<model-name>` with the name of the model you want to use. For example: `ollama pull mistral-large`
 
-### Configuring Ollama in Agent Zero
+### Configuring Ollama in Agent Zero Lite
 
 1. Once you've downloaded your model(s), select it in the Settings page of the GUI.
 2. Within the Chat model, Utility model, or Embedding model section, choose **Ollama** as provider.
@@ -521,7 +521,7 @@ Replace `<model-name>` with the name of the model you want to use. For example: 
 ![ollama](../res/setup/settings/4-local-models.png)
 
 > [!NOTE]
-> If Agent Zero runs in Docker and Ollama runs on the host, ensure port **11434** is reachable from the container. If both services are in the same Docker network, you can use `http://<container_name>:11434` instead of `host.docker.internal`.
+> If Agent Zero Lite runs in Docker and Ollama runs on the host, ensure port **11434** is reachable from the container. If both services are in the same Docker network, you can use `http://<container_name>:11434` instead of `host.docker.internal`.
 
 ### Managing Downloaded Models
 
@@ -544,7 +544,7 @@ ollama rm <model-name>
 
 ## Using Agent Zero on Your Mobile Device
 
-Agent Zero can be accessed from mobile devices and other computers using the built-in **Tunnel feature**.
+Agent Zero Lite can be accessed from mobile devices and other computers using the built-in **Tunnel feature**.
 
 ### Recommended: Using Tunnel (Remote Access)
 
@@ -578,7 +578,7 @@ For developers or users who need to run Agent Zero directly on their system, see
 
 ## Advanced: Automated Configuration via Environment Variables
 
-Agent Zero settings can be automatically configured using environment variables with the `A0_SET_` prefix in your `.env` file. This enables automated deployments without manual configuration.
+Agent Zero Lite settings can be automatically configured using environment variables with the `A0_SET_` prefix in your `.env` file. This enables automated deployments without manual configuration.
 
 **Usage:**
 
@@ -613,7 +613,7 @@ When running Docker, you can pass these as environment variables:
 docker run -p 50080:80 \
   -e A0_SET_chat_model_provider=anthropic \
   -e A0_SET_chat_model_name=claude-3-5-sonnet-20241022 \
-  agent0ai/agent-zero
+  agent0ai/agent-zero-lite
 ```
 
 **Notes:**
@@ -630,7 +630,7 @@ If you are migrating from older, non-Docker setups, A0 handles the migration of 
 
 ## Conclusion
 
-After following the instructions for your specific operating system, you should have Agent Zero successfully installed and running. You can now start exploring the framework's capabilities and experimenting with creating your own intelligent agents.
+After following the instructions for your specific operating system, you should have Agent Zero Lite successfully installed and running. You can now start exploring the framework's capabilities and experimenting with creating your own intelligent agents.
 
 **Next Steps:**
 
@@ -638,4 +638,4 @@ After following the instructions for your specific operating system, you should 
 - For development setup and extensions, see the [Development Setup Guide](dev-setup.md)
 - For remote access via tunnel, see [Remote Access via Tunneling](../guides/usage.md#remote-access-via-tunneling)
 
-If you encounter any issues during the installation process, please consult the [Troubleshooting section](../guides/troubleshooting.md) of this documentation or refer to the Agent Zero [Skool](https://www.skool.com/agent-zero) or [Discord](https://discord.gg/B8KZKNsPpj) community for assistance.
+If you encounter any issues during the installation process, please consult the [Troubleshooting section](../guides/troubleshooting.md) of this documentation or refer to the Agent Zero Lite [Skool](https://www.skool.com/agent-zero) or [Discord](https://discord.gg/B8KZKNsPpj) community for assistance.

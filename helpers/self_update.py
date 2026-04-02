@@ -13,7 +13,7 @@ from helpers import git, yaml
 
 
 OFFICIAL_REPO_AUTHOR = "agent0ai"
-OFFICIAL_REPO_NAME = "agent-zero"
+OFFICIAL_REPO_NAME = "agent-zero-lite"
 BRANCH_OPTIONS = [
     {"value": "main", "label": "main"},
     {"value": "ready", "label": "ready"},

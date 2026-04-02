@@ -1,5 +1,5 @@
-# Use the latest slim version of Kali Linux
-FROM kalilinux/kali-rolling
+# Use a lightweight Debian base with Python 3.12 preinstalled
+FROM python:3.12-slim-bookworm
 
 
 # Set locale to en_US.UTF-8 and timezone to UTC

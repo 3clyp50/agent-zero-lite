@@ -1,6 +1,6 @@
 <div align="center">
 
-# `Agent Zero`
+# `Agent Zero Lite`
 
 <p align="center">
     <a href="https://trendshift.io/repositories/11745" target="_blank"><img src="https://trendshift.io/api/badge/repositories/11745" alt="frdel%2Fagent-zero | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
@@ -13,13 +13,13 @@
 
 [Introduction](#a-personal-organic-agentic-framework-that-grows-and-learns-with-you) •
 [Installation](./docs/setup/installation.md) •
-[How to update](./docs/setup/installation.md#how-to-update-agent-zero) <br>
+[How to update](./docs/setup/installation.md#how-to-update-agent-zero-lite) <br>
 [Development Setup](./docs/setup/dev-setup.md) •
 [Usage](./docs/guides/usage.md)
 
 Or see DeepWiki generated documentation:
 
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/agent0ai/agent-zero)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/agent0ai/agent-zero-lite)
 
 </div>
 
@@ -43,13 +43,13 @@ Or see DeepWiki generated documentation:
 
 
 
-- Agent Zero is not a predefined agentic framework. It is designed to be dynamic, organically growing, and learning as you use it.
-- Agent Zero is fully transparent, readable, comprehensible, customizable, and interactive.
-- Agent Zero uses the computer as a tool to accomplish its (your) tasks.
+- Agent Zero Lite is not a predefined agentic framework. It is designed to be dynamic, organically growing, and learning as you use it.
+- Agent Zero Lite is fully transparent, readable, comprehensible, customizable, and interactive.
+- Agent Zero Lite uses the computer as a tool to accomplish its (your) tasks.
 
 # ⚙️ Installation
 
-Click to open a video to learn how to install Agent Zero:
+Click to open a video to learn how to install Agent Zero Lite:
 
 [![Easy Installation guide](/docs/res/install_guide.png)](https://www.youtube.com/watch?v=2-qFNUvqrXA)
 
@@ -67,10 +67,10 @@ irm https://ps.agent-zero.ai | iex
 
 **Docker:**
 ```bash
-docker run -p 80:80 agent0ai/agent-zero
+docker run -p 80:80 agent0ai/agent-zero-lite
 ```
 
-A detailed setup guide for Windows, macOS, and Linux can be found in the Agent Zero Documentation at [this page](./docs/setup/installation.md).
+A detailed setup guide for Windows, macOS, and Linux can be found in the Agent Zero Lite documentation at [this page](./docs/setup/installation.md).
 
 
 # 💡 Key Features
@@ -99,12 +99,12 @@ A detailed setup guide for Windows, macOS, and Linux can be found in the Agent Z
 
 ![Multi-agent](docs/res/usage/multi-agent.png)
 
-### Browser Agent
+### Lite Profile
 
-- Browser automation is provided by the built-in `_browser_agent` plugin.
-- It uses the effective Main Model resolved by `_model_config`; there is no separate browser model slot.
-- Browser vision follows the Main Model's vision setting.
-- Playwright Chromium: **Docker** images ship the headless shell preinstalled. **Local development** installs it on first Browser Agent use via `ensure_playwright_binary()` in `plugins/_browser_agent/helpers/playwright.py` (into `tmp/playwright`); you can pre-install manually (see [Development Setup](docs/setup/dev-setup.md)) to skip the wait.
+- Agent Zero Lite keeps the core Web UI, API, plugins framework, projects, scheduler, memory, `document_query`, tunnel service, SSH, cron, and bundled local SearXNG search.
+- The built-in browser agent and Playwright/browser-use runtime are removed from the lite baseline.
+- Embeddings default to OpenRouter with `openai/text-embedding-3-small`.
+- `_whisper_stt` and `_kokoro_tts` stay in the repo as optional plugins, disabled by default, and require `pip install -r requirements.voice.txt` before enabling them.
 
 4. **Completely Customizable and Extensible**
 
@@ -144,8 +144,8 @@ A detailed setup guide for Windows, macOS, and Linux can be found in the Agent Z
 - The Web UI output is very clean, fluid, colorful, readable, and interactive; nothing is hidden.
 - You can load or save chats directly within the Web UI.
 - The same output you see in the terminal is automatically saved to an HTML file in **logs/** folder for every session.
-- Voice is provided by the built-in `_kokoro_tts` and `_whisper_stt` plugins.
-- Docker/bootstrap remains responsible for installing Kokoro, Whisper, `ffmpeg`, and related speech dependencies.
+- Voice is provided by the built-in `_kokoro_tts` and `_whisper_stt` plugins when you install the optional voice extra.
+- Lite keeps `ffmpeg` in the image for compatibility, but Kokoro, Whisper, and `soundfile` are no longer part of the base Python install.
 - If `_kokoro_tts` is disabled, spoken output falls back to the browser's native speech synthesis.
 
 ![Time example](/docs/res/time_example.jpg)
@@ -185,4 +185,4 @@ A detailed setup guide for Windows, macOS, and Linux can be found in the Agent Z
 
 - [Join our Discord](https://discord.gg/B8KZKNsPpj) for live discussions or [visit our Skool Community](https://www.skool.com/agent-zero).
 - [Follow our YouTube channel](https://www.youtube.com/@AgentZeroFW) for hands-on explanations and tutorials
-- [Report Issues](https://github.com/agent0ai/agent-zero/issues) for bug fixes and features
+- [Report Issues](https://github.com/agent0ai/agent-zero-lite/issues) for bug fixes and features

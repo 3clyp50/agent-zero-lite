@@ -51,15 +51,10 @@ pip install -r requirements2.txt
 
 When running in Docker, Agent Zero uses two distinct Python runtimes to isolate the framework from the code being executed:
 
-### 1. Framework Runtime (/opt/venv-a0)
-- Version: Python 3.12.4
-- Purpose: Runs the Agent Zero backend, API, and core logic.
-- Packages: Contains all dependencies from requirements.txt.
-
-### 2. Execution Runtime (/opt/venv)
-- Version: Python 3.13
-- Purpose: Default environment for the interactive terminal and the agent's code execution tool.
-- Behavior: This is the environment active when you docker exec into the container. Packages installed by the agent via pip install during a task are stored here.
+### Runtime (/opt/venv)
+- Version: Python 3.12
+- Purpose: Shared runtime for the Agent Zero Lite backend, API, interactive terminal, and agent code execution.
+- Packages: Contains the lite core dependencies from `requirements.txt` and `requirements2.txt`.
 
 ---
 
@@ -137,8 +132,8 @@ Key Files:
 - Discovery: Conventions based on folder names (api/, tools/, webui/, extensions/).
 - Plugin-local Python imports: Prefer `usr.plugins.<plugin_name>...` for code that lives under `usr/plugins/`. Avoid `sys.path` hacks and avoid symlink-dependent `plugins.<plugin_name>...` imports for community plugins.
 - Runtime hooks: Plugins may also expose hooks in hooks.py, callable by the framework through helpers.plugins.call_plugin_hook(...).
-- Hook runtime: hooks.py executes inside the Agent Zero framework Python environment, so sys.executable -m pip installs dependencies into that same framework runtime.
-- Environment targeting: If a plugin needs packages or binaries for the separate agent execution runtime or system environment, it must explicitly switch environments in a subprocess by targeting the correct interpreter, virtualenv, or package manager.
+- Hook runtime: hooks.py executes inside the shared Agent Zero Lite Python environment, so `sys.executable -m pip` installs dependencies into `/opt/venv`.
+- Environment targeting: If a plugin needs packages or binaries for another system environment, it must explicitly switch environments in a subprocess by targeting the correct interpreter, virtualenv, or package manager.
 - Settings: Use get_plugin_config(plugin_name, agent=agent) to retrieve settings. Plugins can expose a UI for settings via webui/config.html. Plugin settings modals instantiate a local context from $store.pluginSettingsPrototype; bind plugin fields to config.* and use context.* for modal-level state and actions.
 - Activation: Global and scoped activation rules are stored as .toggle-1 (ON) and .toggle-0 (OFF). Scoped rules are handled via the plugin "Switch" modal.
 - Cleanup rule: Plugins should not permanently modify the system in ways that outlive the plugin. Deleting a plugin should not leave behind symlinks, unmanaged services, or stray files outside plugin-owned paths unless the user explicitly requested that behavior.

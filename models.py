@@ -41,11 +41,10 @@ from langchain_core.messages import (
     SystemMessage,
 )
 from langchain.embeddings.base import Embeddings
-from sentence_transformers import SentenceTransformer
 from pydantic import ConfigDict
 
 
-# disable extra logging, must be done repeatedly, otherwise browser-use will turn it back on for some reason
+# disable extra logging, must be done repeatedly because some integrations re-enable it
 def turn_off_logging():
     os.environ["LITELLM_LOG"] = "ERROR"  # only errors
     litellm.suppress_debug_info = True
@@ -197,6 +196,17 @@ class ChatGenerationResult:
 
 rate_limiters: dict[str, RateLimiter] = {}
 api_keys_round_robin: dict[str, int] = {}
+
+
+def _load_sentence_transformer():
+    try:
+        from sentence_transformers import SentenceTransformer
+    except ImportError as exc:
+        raise ImportError(
+            "Local HuggingFace embeddings require the local embeddings extra. "
+            "Install `pip install -r requirements.local-embeddings.txt`."
+        ) from exc
+    return SentenceTransformer
 
 
 @extensible
@@ -643,7 +653,8 @@ class LocalSentenceTransformerWrapper(Embeddings):
         }
         st_kwargs = {k: v for k, v in (kwargs or {}).items() if k in st_allowed_keys}
 
-        self.model = SentenceTransformer(model, **st_kwargs)
+        sentence_transformer_cls = _load_sentence_transformer()
+        self.model = sentence_transformer_cls(model, **st_kwargs)
         self.model_name = model
         self.a0_model_conf = model_config
 

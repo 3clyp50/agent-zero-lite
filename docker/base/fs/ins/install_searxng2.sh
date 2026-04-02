@@ -3,22 +3,15 @@ set -e
 
 echo "====================SEARXNG2 START===================="
 
-
 # clone SearXNG repo
 git clone "https://github.com/searxng/searxng" \
                    "/usr/local/searxng/searxng-src"
 
-echo "====================SEARXNG2 VENV===================="
+echo "====================SEARXNG2 SHARED VENV===================="
 
-# create virtualenv:
-python3.13 -m venv "/usr/local/searxng/searx-pyenv"
-
-# make it default
-echo ". /usr/local/searxng/searx-pyenv/bin/activate" \
-                   >>  "/usr/local/searxng/.profile"
-
-# activate venv
-source "/usr/local/searxng/searx-pyenv/bin/activate"
+# use the shared runtime environment
+source "/opt/venv/bin/activate"
+echo ". /opt/venv/bin/activate" > "/usr/local/searxng/.profile"
 
 echo "====================SEARXNG2 INST===================="
 
@@ -32,5 +25,7 @@ pip install --no-cache-dir --use-pep517 --no-build-isolation .
 
 # cleanup cache
 pip cache purge
+
+chown -R "searxng:searxng" "/usr/local/searxng"
 
 echo "====================SEARXNG2 END===================="

@@ -113,10 +113,10 @@ find /a0 -path "*/plugins/<name>/config.json" 2>/dev/null
 The `install()` hook is called automatically by the plugin installer after placement. If it didn't run:
 - Check the function is named exactly `install` (not `on_install` or similar)
 - Check for exceptions in the function (add try/except with print for debugging)
-- Manually trigger in the **framework runtime** (not via `code_execution_tool` python - that uses `/opt/venv`, not `/opt/venv-a0`):
+- Manually trigger in the shared runtime (`/opt/venv`):
 
 ```bash
-cd /a0 && /opt/venv-a0/bin/python -c "
+cd /a0 && /opt/venv/bin/python -c "
 import asyncio
 from helpers.plugins import call_plugin_hook
 asyncio.run(call_plugin_hook('<plugin_name>', 'install'))
@@ -130,7 +130,7 @@ If the `pre_update()` hook is not running before plugin updates:
 - Manually trigger it in the **framework runtime** the same way:
 
 ```bash
-cd /a0 && /opt/venv-a0/bin/python -c "
+cd /a0 && /opt/venv/bin/python -c "
 import asyncio
 from helpers.plugins import call_plugin_hook
 asyncio.run(call_plugin_hook('<plugin_name>', 'pre_update'))

@@ -76,8 +76,8 @@ class MigrateModelConfig(Extension):
                 "kwargs": raw.get("util_model_kwargs", {}),
             },
             "embedding_model": {
-                "provider": raw.get("embed_model_provider", "huggingface"),
-                "name": raw.get("embed_model_name", "sentence-transformers/all-MiniLM-L6-v2"),
+                "provider": raw.get("embed_model_provider", "openrouter"),
+                "name": raw.get("embed_model_name", "openai/text-embedding-3-small"),
                 "api_base": raw.get("embed_model_api_base", ""),
                 "rl_requests": raw.get("embed_model_rl_requests", 0),
                 "rl_input": raw.get("embed_model_rl_input", 0),

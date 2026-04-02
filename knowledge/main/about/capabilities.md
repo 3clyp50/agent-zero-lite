@@ -2,11 +2,10 @@
 
 ## Code Execution
 
-The agent can write and execute code in any language available in the Docker container. The execution environment is a Kali Linux container with two Python runtimes:
-- `/opt/venv-a0` (Python 3.12) - the Agent Zero framework runtime
-- `/opt/venv` (Python 3.13) - the agent's execution runtime (default for agent-run code)
+The agent can write and execute code in any language available in the Docker container. The execution environment is a Debian container with a single Python runtime:
+- `/opt/venv` (Python 3.12) - the shared Agent Zero Lite runtime for framework and agent-run code
 
-The agent installs packages into the execution runtime (`/opt/venv`) via `pip install`. Packages needed by the framework itself must target `/opt/venv-a0`.
+The agent installs packages into the shared runtime (`/opt/venv`) via `pip install`.
 
 Supported runtimes for code execution: Python, Node.js, Bash/shell. Other languages (Go, Rust, PHP, etc.) can be used if the compiler/runtime is installed in the container.
 

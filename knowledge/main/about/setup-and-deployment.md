@@ -2,11 +2,11 @@
 
 ## Docker Deployment (Standard)
 
-Agent Zero is distributed as a Docker image: `agent0ai/agent-zero`.
+Agent Zero is distributed as a Docker image: `agent0ai/agent-zero-lite`.
 
 ```bash
-docker pull agent0ai/agent-zero
-docker run -p 50001:80 agent0ai/agent-zero
+docker pull agent0ai/agent-zero-lite
+docker run -p 50001:80 agent0ai/agent-zero-lite
 ```
 
 The web UI is then accessible at `http://localhost:50001`. The container exposes port 80 internally; map any host port to it.
@@ -17,7 +17,7 @@ All user data lives in `/a0/usr/` inside the container. Without a volume mount, 
 
 Map `/a0/usr` to a host directory for persistence:
 ```bash
-docker run -p 50001:80 -v /path/on/host:/a0/usr agent0ai/agent-zero
+docker run -p 50001:80 -v /path/on/host:/a0/usr agent0ai/agent-zero-lite
 ```
 
 Contents of `/a0/usr/`:
@@ -104,7 +104,7 @@ Agent Zero is a Progressive Web App (PWA). On mobile, open the web UI URL in a b
 ## Development Setup (non-Docker)
 
 ```bash
-git clone https://github.com/agent0ai/agent-zero
+git clone https://github.com/agent0ai/agent-zero-lite
 cd agent-zero
 python -m venv .venv
 source .venv/bin/activate

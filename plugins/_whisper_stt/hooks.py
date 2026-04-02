@@ -17,7 +17,11 @@ def save_plugin_config(default=None, settings=None, **kwargs):
 
     previous_model = str(previous.get("model_size") or "")
     next_model = str(normalized.get("model_size") or "")
-    if next_model and next_model != previous_model:
+    if (
+        next_model
+        and next_model != previous_model
+        and runtime.are_dependencies_available()
+    ):
         DeferredTask().start_task(runtime.preload, next_model)
 
     return normalized
