@@ -1,5 +1,5 @@
-# Use a lightweight Debian base with Python 3.12 preinstalled
-FROM python:3.12-slim-bookworm
+# Use a fuller Debian base with Python 3.12 preinstalled
+FROM python:3.12-bookworm
 
 
 # Set locale to en_US.UTF-8 and timezone to UTC
@@ -26,9 +26,6 @@ RUN bash /ins/install_base_packages4.sh
 
 # install python after packages to ensure version overriding
 RUN bash /ins/install_python.sh
-
-# install searxng
-RUN bash /ins/install_searxng.sh
 
 # configure ssh
 RUN bash /ins/configure_ssh.sh

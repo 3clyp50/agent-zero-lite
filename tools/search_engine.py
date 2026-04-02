@@ -1,38 +1,31 @@
-import os
-import asyncio
-from helpers import dotenv, perplexity_search, duckduckgo_search
-from helpers.tool import Tool, Response
-from helpers.print_style import PrintStyle
 from helpers.errors import handle_error
-from helpers.searxng import search as searxng
-
-SEARCH_ENGINE_RESULTS = 10
+from helpers.tool import Tool, Response
+from plugins._web_search.helpers import web_search
 
 
 class SearchEngine(Tool):
     async def execute(self, query="", **kwargs):
+        try:
+            browser_model = self.agent.get_browser_model()
+            if browser_model is None:
+                raise RuntimeError("browser search model is unavailable")
 
-
-        searxng_result = await self.searxng_search(query)
+            system_message, user_message = web_search.build_search_messages(
+                query, web_search.SEARCH_ENGINE_RESULTS
+            )
+            response, reasoning = await browser_model.unified_call(
+                system_message=system_message,
+                user_message=user_message,
+            )
+            result = (response or reasoning or "").strip()
+            if not result:
+                raise RuntimeError("browser search model returned no content")
+        except Exception as exc:
+            handle_error(exc)
+            result = f"Search Engine search failed: {exc}"
 
         await self.agent.handle_intervention(
-            searxng_result
+            result
         )  # wait for intervention and handle it, if paused
 
-        return Response(message=searxng_result, break_loop=False)
-
-
-    async def searxng_search(self, question):
-        results = await searxng(question)
-        return self.format_result_searxng(results, "Search Engine")
-
-    def format_result_searxng(self, result, source):
-        if isinstance(result, Exception):
-            handle_error(result)
-            return f"{source} search failed: {str(result)}"
-
-        outputs = []
-        for item in (result or {}).get("results", []):
-            outputs.append(f"{item['title']}\n{item['url']}\n{item['content']}")
-
-        return "\n\n".join(outputs[:SEARCH_ENGINE_RESULTS]).strip()
+        return Response(message=result, break_loop=False)

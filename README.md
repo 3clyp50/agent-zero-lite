@@ -101,7 +101,7 @@ A detailed setup guide for Windows, macOS, and Linux can be found in the Agent Z
 
 ### Lite Profile
 
-- Agent Zero Lite keeps the core Web UI, API, plugins framework, projects, scheduler, memory, `document_query`, tunnel service, SSH, cron, and bundled local SearXNG search.
+- Agent Zero Lite keeps the core Web UI, API, plugins framework, projects, scheduler, memory, `document_query`, tunnel service, SSH, cron, and builtin API-backed web search.
 - The built-in browser agent and Playwright/browser-use runtime are removed from the lite baseline.
 - Embeddings default to OpenRouter with `openai/text-embedding-3-small`.
 - `_whisper_stt` and `_kokoro_tts` stay in the repo as optional plugins, disabled by default, and require `pip install -r requirements.voice.txt` before enabling them.
